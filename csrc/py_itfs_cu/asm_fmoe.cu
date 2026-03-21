@@ -251,12 +251,12 @@ FMoeKernel* get_heuristic_kernel(
                     uint32_t local_round = (tg_num + num_cu - 1) / num_cu;
                     if(local_round < round || // fewer round is better
                        (local_round == round &&
-                        (empty_cu > (local_round * num_cu - tg_num) || // fewer empty_cu is better
-                         (empty_cu == (local_round * num_cu - tg_num) &&
+                        (empty_cu > (local_round * num_cu - tg_num_norm) || // fewer empty_cu is better
+                         (empty_cu == (local_round * num_cu - tg_num_norm) &&
                           cfg.ps == 1)))) // prefer PS kernel
                     {
                         round      = local_round;
-                        empty_cu   = local_round * num_cu - tg_num;
+                        empty_cu   = local_round * num_cu - tg_num_norm;
                         selectedKl = el.first;
                         if(cfg.ps == 1)
                             num_persistent_tgs = cfg.tg_num_perCU * num_cu;
